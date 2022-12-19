@@ -1,0 +1,17 @@
+@import './variables.scss';
+@import './_all.scss';
+
+body {
+  margin: 0;
+  background-color: #bbb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  background-color: #eee;
+  min-height: 100vh;
+  padding: 40px 48px;
+  box-sizing: border-box;
+}

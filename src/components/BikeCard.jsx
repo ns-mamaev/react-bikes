@@ -16,6 +16,7 @@ function BikeCard({ modelName, images, colors, sizes, price }) {
             }`}
             style={{ backgroundColor: color }}
             onClick={() => setSelectedColor(i)}
+            key={i}
           />
         ))}
       </ul>
@@ -25,7 +26,8 @@ function BikeCard({ modelName, images, colors, sizes, price }) {
             className={`bike-card__size-tab ${
               selectedSize === i ? 'bike-card__size-tab_active' : ''
             }`}
-            onClick={() => setSelectedSize(i)}>
+            onClick={() => setSelectedSize(i)}
+            key={i}>
             {size}
           </li>
         ))}

@@ -3,6 +3,7 @@ import Bikes from '../components/Bikes';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import { sortTypes } from '../utills/constants';
+import { categoriesList } from '../utills/constants';
 
 function MainPage() {
   const [bikesList, setBikesList] = React.useState([]);
@@ -15,6 +16,7 @@ function MainPage() {
   };
 
   const [selectedCategory, setSelectedCategory] = React.useState(0);
+  const selectedCategoryName = categoriesList[selectedCategory];
   const onSelectCategory = (index) => {
     setSelectedCategory(index);
   };
@@ -38,9 +40,19 @@ function MainPage() {
   return (
     <main className="content">
       <div className="controls">
-        <Categories selected={selectedCategory} onSelectCategory={onSelectCategory} />
-        <Sort list={sortNames} selected={selectedName} onTypeSelect={onTypeSelect} />
+        <Categories
+          list={categoriesList}
+          selected={selectedCategory}
+          onSelectCategory={onSelectCategory}
+        />
+        <Sort
+          list={sortNames}
+          selected={selectedType}
+          selectedName={selectedName}
+          onTypeSelect={onTypeSelect}
+        />
       </div>
+      <h2 className="bikes__title">{selectedCategoryName}</h2>
       <Bikes list={bikesList} />
     </main>
   );

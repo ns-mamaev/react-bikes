@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Sort({ list, selected, onTypeSelect }) {
+function Sort({ list, selected, selectedName, onTypeSelect }) {
   const [popupOpened, setPopupOpened] = React.useState(false);
 
   const onTypeClick = (i) => {
@@ -13,13 +13,16 @@ function Sort({ list, selected, onTypeSelect }) {
       <div className="sort__label">
         <span className="sort__label-static">Сортировать по:</span>
         <span className="sort__selected-type" onClick={() => setPopupOpened(!popupOpened)}>
-          {selected}
+          {selectedName}
         </span>
       </div>
       {popupOpened && (
         <ul className="sort__popup">
           {list.map((title, i) => (
-            <li key={title} className="sort__type-item" onClick={() => onTypeClick(i)}>
+            <li
+              key={title}
+              className={`sort__type-item ${i === selected ? 'sort__type-item_selected' : ''}`}
+              onClick={() => onTypeClick(i)}>
               {title}
             </li>
           ))}

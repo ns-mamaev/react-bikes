@@ -1,16 +1,12 @@
-import React from 'react';
+import { categoriesList } from '../utills/constants';
 
-function Categories() {
-  const categoriesList = ['шоссе', 'шоссе аэро', 'хардтейлы', 'двухподвесы'];
-
-  const [activeCategory, setActiveCategory] = React.useState(0);
-
+function Categories({ selected, onSelectCategory }) {
   return (
     <ul className="categories">
       {categoriesList.map((cat, i) => (
         <li
-          className={`categories__item ${activeCategory === i ? 'categories__item_active' : ''}`}
-          onClick={() => setActiveCategory(i)}
+          className={`categories__item ${selected === i ? 'categories__item_active' : ''}`}
+          onClick={() => onSelectCategory(i)}
           key={i}>
           {cat}
         </li>

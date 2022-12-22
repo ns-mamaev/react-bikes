@@ -1,13 +1,10 @@
 import React from 'react';
 
-function Sort() {
-  const sortTypes = ['названию', 'популярности', 'цене'];
-  const [selectedType, setSelectedType] = React.useState(0);
+function Sort({ list, selected, onTypeSelect }) {
   const [popupOpened, setPopupOpened] = React.useState(false);
-  const selected = sortTypes[selectedType];
 
-  const onSelectType = (i) => {
-    setSelectedType(i);
+  const onTypeClick = (i) => {
+    onTypeSelect(i);
     setPopupOpened(false);
   };
 
@@ -15,17 +12,21 @@ function Sort() {
     <div className="sort">
       <div className="sort__label">
         <span className="sort__label-static">Сортировать по:</span>
-        <span className="sort__selected-type" onClick={() => setPopupOpened(!popupOpened)}>{selected}</span>
+        <span className="sort__selected-type" onClick={() => setPopupOpened(!popupOpened)}>
+          {selected}
+        </span>
       </div>
       {popupOpened && (
         <ul className="sort__popup">
-          {sortTypes.map((type, i) => (
-            <li key={type} className="sort__type-item" onClick={() => onSelectType(i)}>{type}</li>
+          {list.map((title, i) => (
+            <li key={title} className="sort__type-item" onClick={() => onTypeClick(i)}>
+              {title}
+            </li>
           ))}
         </ul>
       )}
     </div>
-  )
+  );
 }
 
 export default Sort;

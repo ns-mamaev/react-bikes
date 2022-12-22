@@ -6,18 +6,14 @@ function Bikes({ list, inLoading }) {
   const skeletons = inLoading
     ? [...new Array(3)].map((_, index) => <BikeSkeleton key={index} />)
     : null;
-  const bikes =
-    list.length !== 0 ? (
-      list.map((bike) => <BikeCard key={bike.id} {...bike} />)
-    ) : (
-      <p>Ничего не найдено</p>
-    );
-
+  const bikes = list.length !== 0 ? list.map((bike) => <BikeCard key={bike.id} {...bike} />) : null;
+  const findNothing = !inLoading && list.length === 0 ? <p>Ничего не найдено</p> : null;
   return (
     <section>
       <ul className="bikes__grid">
         {skeletons}
         {bikes}
+        {findNothing}
       </ul>
     </section>
   );

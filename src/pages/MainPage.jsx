@@ -22,24 +22,35 @@ function MainPage() {
     setSelectedCategory(index);
   };
 
-  React.useEffect(() => {
-    async function fetchData() {
-      setInLoading(true);
-      try {
-        const { type, order } = sortTypes[selectedType];
-        const res = await fetch(
-          `https://63a2225aa543280f7769c71a.mockapi.io/bikes?sortBy=${type}&order=${order}&category=${selectedCategory}`,
-        );
-        const json = await res.json();
-        setBikesList(json);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setInLoading(false);
-      }
+  const fetchData = async () => {
+    setInLoading(true);
+    setBikesList([]);
+    try {
+      const { type, order } = sortTypes[selectedType];
+      const res = await fetch(
+        `https://63a2225aa543280f7769c71a.mockapi.io/bikes?sortBy=${type}&order=${order}&category=${selectedCategory}`,
+      );
+      const json = await res.json();
+      setBikesList(json);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setInLoading(false);
     }
+  };
+
+  // разделим эффект, будем дергать апи при изменении сортировки, только если массив содержит более 1 элемента
+  React.useEffect(() => {
+    if (bikesList.length > 1) {
+      fetchData();
+      console.log('сортировка');
+    }
+  }, [selectedType]);
+
+  React.useEffect(() => {
     fetchData();
-  }, [selectedType, selectedCategory]);
+    console.log('категория');
+  }, [selectedCategory]);
 
   return (
     <main className="content">

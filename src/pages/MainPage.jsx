@@ -6,6 +6,7 @@ import { sortTypes } from '../utills/constants';
 import { categoriesList } from '../utills/constants';
 
 function MainPage() {
+  const [inLoading, setInLoading] = React.useState(false);
   const [bikesList, setBikesList] = React.useState([]);
   const [selectedType, setSelectedType] = React.useState(0);
   const sortNames = sortTypes.map(({ title }) => title);
@@ -23,6 +24,7 @@ function MainPage() {
 
   React.useEffect(() => {
     async function fetchData() {
+      setInLoading(true);
       try {
         const { type, order } = sortTypes[selectedType];
         const res = await fetch(
@@ -32,6 +34,8 @@ function MainPage() {
         setBikesList(json);
       } catch (err) {
         console.log(err);
+      } finally {
+        setInLoading(false);
       }
     }
     fetchData();
@@ -53,7 +57,7 @@ function MainPage() {
         />
       </div>
       <h2 className="bikes__title">{selectedCategoryName}</h2>
-      <Bikes list={bikesList} />
+      <Bikes list={bikesList} inLoading={inLoading} />
     </main>
   );
 }

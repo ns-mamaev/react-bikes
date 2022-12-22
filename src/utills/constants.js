@@ -11,4 +11,8 @@ export const sortTypes = [
 
 // категории велосипедов
 
-export const categoriesList = ['шоссе', 'шоссе аэро', 'хардтейлы', 'двухподвесы'];
+export const categoriesList = ['все', 'шоссе', 'шоссе аэро', 'хардтейлы', 'двухподвесы'];
+
+// api
+
+export const baseUrl = 'https://63a2225aa543280f7769c71a.mockapi.io/bikes';

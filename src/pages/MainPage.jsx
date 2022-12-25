@@ -1,76 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBikes } from '../redux/slices/bikesSlice';
 import Bikes from '../components/Bikes';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
-import { baseUrl, sortTypes } from '../utills/constants';
-import { categoriesList } from '../utills/constants';
+import useBikesService from '../services/BikesService';
+import { baseUrl, sortTypes, categoriesList } from '../utills/constants';
 
-function MainPage({ searchText, isTyping }) {
-  const [inLoading, setInLoading] = React.useState(false);
-  const [bikesList, setBikesList] = React.useState([]);
-  const [selectedType, setSelectedType] = React.useState(0);
-  const sortNames = sortTypes.map(({ title }) => title);
-  const selectedName = sortTypes[selectedType].title;
+function MainPage() {
+  const { getAllBikes, isLoading } = useBikesService(baseUrl);
+  const dispatch = useDispatch();
+  const { categoryId, sortTypeId } = useSelector((state) => state.filter);
+  const bikesList = useSelector((state) => state.bikes.list);
+  const { sortBy, order } = sortTypes[sortTypeId];
+  const categoryTitle = categoriesList[categoryId];
 
-  const onTypeSelect = (index) => {
-    setSelectedType(index);
+  const onBikesLoading = () => {
+    getAllBikes({
+      category: categoryId,
+      sortBy,
+      order,
+    }).then((res) => {
+      dispatch(setBikes(res));
+    });
   };
 
-  const [selectedCategory, setSelectedCategory] = React.useState(0);
-  const selectedCategoryName = categoriesList[selectedCategory];
-  const onSelectCategory = (index) => {
-    setSelectedCategory(index);
-  };
-
-  const fetchData = async () => {
-    setInLoading(true);
-    setBikesList([]);
-    const { type, order } = sortTypes[selectedType];
-    const categoryFilter = selectedCategory === 0 ? '' : `&category=${selectedCategory}`;
-    const searchQuery = searchText === '' ? '' : `&modelName=${searchText}`;
-    try {
-      const res = await fetch(
-        `${baseUrl}?sortBy=${type}&order=${order}${categoryFilter}${searchQuery}`,
-      );
-      const json = await res.json();
-      setBikesList(json);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setInLoading(false);
-    }
-  };
-
-  // разделим эффект, будем дергать апи при изменении сортировки, только если массив содержит более 1 элемента
-  React.useEffect(() => {
+  useEffect(onBikesLoading, [categoryId]);
+  useEffect(() => {
     if (bikesList.length > 1) {
-      fetchData();
-      console.log('сортировка');
+      onBikesLoading();
     }
-  }, [selectedType]);
-
-  React.useEffect(() => {
-    fetchData();
-    console.log('категория');
-  }, [selectedCategory]);
+  }, [sortTypeId]);
 
   return (
     <main className="content">
       <div className="controls">
-        <Categories
-          list={categoriesList}
-          selected={selectedCategory}
-          onSelectCategory={onSelectCategory}
-        />
-        <Sort
-          list={sortNames}
-          selected={selectedType}
-          selectedName={selectedName}
-          onTypeSelect={onTypeSelect}
-        />
+        <Categories />
+        <Sort />
       </div>
-      <h2 className="bikes__title">{selectedCategoryName}</h2>
-      <Bikes list={bikesList} inLoading={inLoading} searchText={searchText} />
+      <h2 className="bikes__title">{categoryTitle}</h2>
+      <Bikes isLoading={isLoading} />
     </main>
   );
 }

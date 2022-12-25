@@ -1,10 +1,16 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sortTypes } from '../utills/constants';
+import { setSortType } from '../redux/slices/filterSlice';
 
-function Sort({ list, selected, selectedName, onTypeSelect }) {
+function Sort() {
   const [popupOpened, setPopupOpened] = React.useState(false);
+  const selected = useSelector((state) => state.filter.sortTypeId);
+  const selectedName = sortTypes[selected].title;
+  const dispatch = useDispatch();
 
-  const onTypeClick = (i) => {
-    onTypeSelect(i);
+  const onSelectType = (i) => {
+    dispatch(setSortType(i));
     setPopupOpened(false);
   };
 
@@ -18,11 +24,11 @@ function Sort({ list, selected, selectedName, onTypeSelect }) {
       </div>
       {popupOpened && (
         <ul className="sort__popup">
-          {list.map((title, i) => (
+          {sortTypes.map(({ title }, i) => (
             <li
               key={title}
               className={`sort__type-item ${i === selected ? 'sort__type-item_selected' : ''}`}
-              onClick={() => onTypeClick(i)}>
+              onClick={() => onSelectType(i)}>
               {title}
             </li>
           ))}

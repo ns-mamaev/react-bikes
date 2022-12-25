@@ -1,11 +1,22 @@
-function Categories({ list, selected, onSelectCategory }) {
+import { useDispatch, useSelector } from 'react-redux';
+import { categoriesList } from '../utills/constants';
+import { setCategory } from '../redux/slices/filterSlice';
+
+function Categories() {
+  const selected = useSelector((state) => state.filter.categoryId);
+  const dispatch = useDispatch();
+
+  const onSelectCategory = (i) => {
+    dispatch(setCategory(i));
+  };
+
   return (
     <ul className="categories">
-      {list.map((cat, i) => (
+      {categoriesList.map((cat, i) => (
         <li
           className={`categories__item ${selected === i ? 'categories__item_active' : ''}`}
           onClick={() => onSelectCategory(i)}
-          key={i}>
+          key={cat}>
           {cat}
         </li>
       ))}

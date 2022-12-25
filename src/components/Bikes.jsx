@@ -1,18 +1,21 @@
 import React from 'react';
 import BikeCard from './BikeCard';
 import BikeSkeleton from './BikeSkeleton';
+import { useSelector } from 'react-redux';
 
-function Bikes({ list, inLoading, searchText }) {
-  const skeletons = inLoading
+function Bikes({ isLoading }) {
+  const bikesList = useSelector((state) => state.bikes.list);
+
+  const skeletons = isLoading
     ? [...new Array(3)].map((_, index) => <BikeSkeleton key={index} />)
     : null;
   const bikes =
-    list.length !== 0
-      ? list
-          .filter(({ modelName }) => modelName.toLowerCase().includes(searchText.toLowerCase()))
+    bikesList.length !== 0
+      ? bikesList
+          // .filter(({ modelName }) => modelName.toLowerCase().includes(searchText.toLowerCase()))
           .map((bike) => <BikeCard key={bike.id} {...bike} />)
       : null;
-  const findNothing = !inLoading && list.length === 0 ? <p>Ничего не найдено</p> : null;
+  const findNothing = !isLoading && bikesList.length === 0 ? <p>Ничего не найдено</p> : null;
   return (
     <section>
       <ul className="bikes__grid">

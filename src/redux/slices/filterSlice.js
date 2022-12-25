@@ -4,6 +4,7 @@ const initialState = {
   categoryId: 0,
   sortTypeId: 0,
   searchValue: '',
+  currentPage: 0,
 };
 
 const filterSlice = createSlice({
@@ -19,9 +20,12 @@ const filterSlice = createSlice({
     setSearchValue(state, { payload }) {
       state.searchValue = payload;
     },
+    setCurrentPage(state, { payload }) {
+      state.currentPage = payload;
+    },
   },
 });
 
-export const { setCategory, setSortType, setSearchValue } = filterSlice.actions;
+export const { setCategory, setSortType, setSearchValue, setCurrentPage } = filterSlice.actions;
 
 export default filterSlice.reducer;

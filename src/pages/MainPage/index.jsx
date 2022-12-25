@@ -1,16 +1,18 @@
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBikes } from '../redux/slices/bikesSlice';
-import Bikes from '../components/Bikes';
-import Categories from '../components/Categories';
-import Sort from '../components/Sort';
-import useBikesService from '../services/BikesService';
-import { baseUrl, sortTypes, categoriesList } from '../utills/constants';
+import { setBikes } from '../../redux/slices/bikesSlice';
+import Bikes from '../../components/Bikes';
+import Categories from '../../components/Categories';
+import Sort from '../../components/Sort';
+import useBikesService from '../../services/BikesService';
+import { baseUrl, sortTypes, categoriesList } from '../../utills/constants';
+import Pagination from '../../components/Pagination';
+import styles from './MainPage.module.scss';
 
 function MainPage() {
   const { getAllBikes, isLoading } = useBikesService(baseUrl);
   const dispatch = useDispatch();
-  const { categoryId, sortTypeId, searchValue } = useSelector((state) => state.filter);
+  const { categoryId, sortTypeId, searchValue, currentPage } = useSelector((state) => state.filter);
   const { sortBy, order } = sortTypes[sortTypeId];
   const categoryTitle = categoriesList[categoryId];
 
@@ -20,17 +22,14 @@ function MainPage() {
       sortBy,
       order,
       searchValue,
+      page: currentPage + 1,
+      limit: 6,
     }).then((res) => {
       dispatch(setBikes(res));
     });
   };
 
-  useEffect(onBikesLoading, [categoryId, sortTypeId, searchValue]);
-  // useEffect(() => {
-  //   if (bikesList.length > 1) {
-  //     onBikesLoading();
-  //   }
-  // }, [sortTypeId]);
+  useEffect(onBikesLoading, [categoryId, sortTypeId, searchValue, currentPage]);
 
   return (
     <main className="content">
@@ -38,8 +37,9 @@ function MainPage() {
         <Categories />
         <Sort />
       </div>
-      <h2 className="bikes__title">{categoryTitle}</h2>
+      <h2 className={styles.title}>{categoryTitle}</h2>
       <Bikes isLoading={isLoading} />
+      <Pagination />
     </main>
   );
 }

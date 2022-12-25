@@ -10,10 +10,8 @@ function Bikes({ isLoading }) {
     ? [...new Array(3)].map((_, index) => <BikeSkeleton key={index} />)
     : null;
   const bikes =
-    bikesList.length !== 0
-      ? bikesList
-          // .filter(({ modelName }) => modelName.toLowerCase().includes(searchText.toLowerCase()))
-          .map((bike) => <BikeCard key={bike.id} {...bike} />)
+    bikesList.length !== 0 && !isLoading
+      ? bikesList.map((bike) => <BikeCard key={bike.id} {...bike} />)
       : null;
   const findNothing = !isLoading && bikesList.length === 0 ? <p>Ничего не найдено</p> : null;
   return (

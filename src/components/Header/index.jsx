@@ -1,8 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
+import Search from '../Search';
 
 import style from './Header.module.scss';
 
-function Header({ onSearch, searchText }) {
+function Header() {
   const location = useLocation().pathname;
 
   return (
@@ -10,12 +11,7 @@ function Header({ onSearch, searchText }) {
       <h1 className={style.title}>REACT - BIKES</h1>
       {location === '/' && (
         <>
-          <input
-            type="text"
-            placeholder="Поиск по названию..."
-            value={searchText}
-            onChange={(e) => onSearch(e.target.value)}
-          />
+          <Search />
           <Link to="/cart">В корзину</Link>
         </>
       )}

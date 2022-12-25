@@ -1,19 +1,20 @@
-import React, { useCallback } from 'react';
-import SearchContext from '../../contexts/searchContext';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../redux/slices/filterSlice';
 import { debounce } from '../../utills/utills';
 import styles from './Search.module.scss';
 
 function Search() {
-  const [value, setValue] = React.useState('');
-  const { setSearchValue } = React.useContext(SearchContext);
+  const [displayedText, setDisplayedText] = React.useState('');
+  const dispatch = useDispatch();
 
-  const onSearch = useCallback(
-    debounce((value) => setSearchValue(value), 500),
+  const onSearch = React.useCallback(
+    debounce((value) => dispatch(setSearchValue(value)), 500),
     [],
   );
 
   const onChange = (value) => {
-    setValue(value);
+    setDisplayedText(value);
     onSearch(value);
   };
 
@@ -21,7 +22,7 @@ function Search() {
     <input
       type="text"
       placeholder="Поиск по названию..."
-      value={value}
+      value={displayedText}
       onChange={(e) => onChange(e.target.value)}
     />
   );

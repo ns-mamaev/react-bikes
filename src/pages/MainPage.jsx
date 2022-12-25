@@ -6,15 +6,13 @@ import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import useBikesService from '../services/BikesService';
 import { baseUrl, sortTypes, categoriesList } from '../utills/constants';
-import SearchContext from '../contexts/searchContext';
 
 function MainPage() {
   const { getAllBikes, isLoading } = useBikesService(baseUrl);
   const dispatch = useDispatch();
-  const { categoryId, sortTypeId } = useSelector((state) => state.filter);
+  const { categoryId, sortTypeId, searchValue } = useSelector((state) => state.filter);
   const { sortBy, order } = sortTypes[sortTypeId];
   const categoryTitle = categoriesList[categoryId];
-  const { searchValue } = useContext(SearchContext);
 
   const onBikesLoading = () => {
     getAllBikes({

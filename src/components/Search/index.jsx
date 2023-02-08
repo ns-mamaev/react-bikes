@@ -4,8 +4,6 @@ import { setSearchValue } from '../../redux/slices/filterSlice';
 import { debounce } from '../../utills/utills';
 import styles from './Search.module.scss';
 
-console.log(styles);
-
 function Search() {
   const [displayedText, setDisplayedText] = React.useState('');
   const dispatch = useDispatch();

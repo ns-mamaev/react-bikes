@@ -32,8 +32,8 @@ function MainPage() {
   useEffect(onBikesLoading, [categoryId, sortTypeId, searchValue, currentPage]);
 
   return (
-    <main className="content">
-      <div className="controls">
+    <main className='content'>
+      <div className='controls'>
         <Categories />
         <Sort />
       </div>

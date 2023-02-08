@@ -1,3 +1,5 @@
+@import '/src/scss/variables.scss';
+
 @keyframes pulse {
   from {
     opacity: 1;
@@ -17,9 +19,10 @@
 
 .bike {
   animation: pulse 0.5s infinite alternate;
+  margin-bottom: 20px;
+  fill: $skeleton-color;
   width: 100%;
   aspect-ratio: 1.6;
-  margin-bottom: 20px;
 }
 
 .title {
@@ -27,7 +30,7 @@
   height: 27px;
   width: 150px;
   margin-bottom: 12px;
-  background-color: #ddd;
+  background-color: $skeleton-color;
 }
 
 .colors {
@@ -35,13 +38,13 @@
   height: 28px;
   width: 70px;
   margin-bottom: 12px;
-  background-color: #ddd;
+  background-color: $skeleton-color;
   border-radius: 14px;
 }
 
 .sizes {
   animation: pulse 0.5s infinite alternate;
-  background-color: #ddd;
+  background-color: $skeleton-color;
   height: 31px;
   width: 220px;
   margin-bottom: 12px;
@@ -56,14 +59,14 @@
 
 .price {
   animation: pulse 0.5s infinite alternate;
-  background-color: #ddd;
+  background-color: $skeleton-color;
   width: 120px;
   height: 37px;
 }
 
 .button {
   animation: pulse 0.5s infinite alternate;
-  background-color: #ddd;
+  background-color: $skeleton-color;
   width: 155px;
   height: 44px;
 }

@@ -7,7 +7,7 @@ function Bikes({ isLoading }) {
   const bikesList = useSelector((state) => state.bikes.list);
 
   const skeletons = isLoading
-    ? [...new Array(3)].map((_, index) => <BikeSkeleton key={index} />)
+    ? [...new Array(6)].map((_, index) => <BikeSkeleton key={index} />)
     : null;
   const bikes =
     bikesList.length !== 0 && !isLoading
@@ -16,7 +16,7 @@ function Bikes({ isLoading }) {
   const findNothing = !isLoading && bikesList.length === 0 ? <p>Ничего не найдено</p> : null;
   return (
     <section>
-      <ul className="bikes__grid">
+      <ul className='bikes__grid'>
         {skeletons}
         {bikes}
         {findNothing}

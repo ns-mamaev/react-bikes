@@ -23,9 +23,9 @@ function Pagination() {
       <ul className={styles.pages}>
         {[...Array(pagesCount)].map((_, i) => (
           <li
-            className={currentPage === i ? styles.active : ''}
+            className={currentPage === i + 1 ? styles.active : ''}
             key={i}
-            onClick={() => onChangePage(i)}>
+            onClick={() => onChangePage(i + 1)}>
             {i + 1}
           </li>
         ))}

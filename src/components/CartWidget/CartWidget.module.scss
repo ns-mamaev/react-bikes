@@ -29,6 +29,7 @@
         display: flex;
         align-items: center;
         margin-bottom: 24px;
+        position: relative;
 
         &:hover .removeItem {
           visibility: visible;
@@ -46,6 +47,13 @@
         .itemTitle {
           margin: 0;
           margin-right: 10px;
+          flex-grow: 1;
+        }
+
+        .itemQty {
+          left: 0;
+          top: 0;
+          font-size: 12px;
         }
 
         .removeItem {
@@ -106,7 +114,7 @@
   background: url('../../assets/images/cart-empty.svg') center / contain no-repeat;
 }
 
-.itemsQty {
+.qtyLabel {
   background-color: #000;
   color: #fff;
   border-radius: 50%;
@@ -118,7 +126,10 @@
   font-weight: 700;
   font-size: 16px;
   position: absolute;
+  z-index: 2;
+}
+
+.totalQty {
   top: -16px;
   right: 0;
-  z-index: 2;
 }

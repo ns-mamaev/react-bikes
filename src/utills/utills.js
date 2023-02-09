@@ -33,3 +33,7 @@ export const parseQuery = (searchString) => {
       return res;
     }, {});
 };
+
+export const createTitle = (title, additions, separator = ', ') => {
+  return title + separator + Object.values(additions).join(separator);
+};

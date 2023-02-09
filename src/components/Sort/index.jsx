@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { sortTypes } from '../utills/constants';
-import { setSortType } from '../redux/slices/filterSlice';
+import { sortTypes } from '../../utills/constants';
+import { setSortType } from '../../redux/slices/filterSlice';
+import styles from './Sort.module.scss';
 
 function Sort() {
   const [popupOpened, setPopupOpened] = React.useState(false);
@@ -9,6 +10,8 @@ function Sort() {
   const selectedName = sortTypes[selected].title;
   const dispatch = useDispatch();
   const popupRef = useRef();
+
+  console.log(styles);
 
   const onSelectType = (i) => {
     dispatch(setSortType(i));
@@ -23,7 +26,7 @@ function Sort() {
     };
 
     const onClickAround = (e) => {
-      if (!e.path.includes(popupRef.current)) {
+      if (e.target.closest(`.${styles.sort}`) !== popupRef.current) {
         setPopupOpened(!popupOpened);
       }
     };
@@ -39,25 +42,23 @@ function Sort() {
   }, [popupOpened]);
 
   return (
-    <div className='sort' ref={popupRef}>
-      <div className='sort__label'>
-        <span className='sort__label-static'>Сортировать по:</span>
-        <span className='sort__selected-type' onClick={() => setPopupOpened(!popupOpened)}>
+    <div className={styles.sort} ref={popupRef}>
+      <div className={styles.label}>
+        <span className={styles.labelStatic}>Сортировать по:</span>
+        <span className={styles.selectedType} onClick={() => setPopupOpened(!popupOpened)}>
           {selectedName}
         </span>
       </div>
-      {popupOpened && (
-        <ul className='sort__popup'>
-          {sortTypes.map(({ title }, i) => (
-            <li
-              key={title}
-              className={`sort__type-item ${i === selected ? 'sort__type-item_selected' : ''}`}
-              onClick={() => onSelectType(i)}>
-              {title}
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className={styles.popup + ' ' + (popupOpened ? '' : styles.popupHidden)}>
+        {sortTypes.map(({ title }, i) => (
+          <li
+            key={title}
+            className={styles.typeItem + ' ' + (i === selected ? styles.typeItemSelected : '')}
+            onClick={() => onSelectType(i)}>
+            {title}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

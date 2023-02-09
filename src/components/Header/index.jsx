@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import CartWidget from '../CartWidget';
 import Search from '../Search';
 
 import style from './Header.module.scss';
@@ -12,7 +13,7 @@ function Header() {
       {location === '/' && (
         <>
           <Search />
-          <Link to="/cart">В корзину</Link>
+          <CartWidget />
         </>
       )}
     </header>

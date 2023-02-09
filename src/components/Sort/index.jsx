@@ -11,8 +11,6 @@ function Sort() {
   const dispatch = useDispatch();
   const popupRef = useRef();
 
-  console.log(styles);
-
   const onSelectType = (i) => {
     dispatch(setSortType(i));
     setPopupOpened(false);

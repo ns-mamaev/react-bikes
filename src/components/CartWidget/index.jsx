@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import CartWidgetItem from '../CartWidgetItem';
@@ -9,15 +9,7 @@ function CartWidget() {
   const [popupOpened, setPopupOpened] = useState(false);
   const timerRef = useRef(null);
   const items = useSelector((state) => state.cart.items);
-  const prevQty = useRef(0);
   const totalQty = useMemo(() => items.reduce((acc, { qty }) => acc + qty, 0), [items]);
-  const flagIncrease = totalQty > prevQty.current ? true : false;
-  console.log(totalQty, prevQty.current, flagIncrease);
-
-  // сохраняем предыдущее кол-во
-  useEffect(() => {
-    prevQty.current = totalQty;
-  }, [totalQty]);
 
   const onMouseEnter = () => {
     if (!totalQty) {
@@ -43,11 +35,11 @@ function CartWidget() {
 
   return (
     <div className={styles.cartWidget} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <Link title="В корзину" className={styles.cartLink} to="/cart">
+      <Link title='В корзину' className={styles.cartLink} to='/cart'>
         Корзина
         <div className={styles.cartIcon}></div>
         {totalQty !== 0 && (
-          <span className={styles.qtyLabel + ' ' + (flagIncrease ? styles.qtyLabelActive : '')}>
+          <span className={styles.qtyLabel + ' ' + (false ? styles.qtyLabelActive : '')}>
             {totalQty}
           </span>
         )}

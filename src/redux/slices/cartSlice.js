@@ -3,6 +3,22 @@ import hash from 'object-hash';
 
 const initialState = {
   items: [],
+  totalQty: 0,
+  totalCost: 0,
+};
+
+const updateTotals = (state) => {
+  const { totalQty, totalCost } = state.items.reduce(
+    (total, { price, qty }) => {
+      total.totalQty += qty;
+      total.totalCost += qty * price;
+      return total;
+    },
+    { totalQty: 0, totalCost: 0 },
+  );
+
+  state.totalQty = totalQty;
+  state.totalCost = totalCost;
 };
 
 const cartSlice = createSlice({
@@ -11,17 +27,20 @@ const cartSlice = createSlice({
   reducers: {
     addItem(state, { payload }) {
       state.items.push({ ...payload, qty: 1, cartId: hash(payload) });
+      updateTotals(state);
     },
     increaseItemQty(state, { payload }) {
       const match = state.items.find(({ cartId }) => cartId === payload);
       if (match) {
         match.qty++;
+        updateTotals(state);
       }
     },
     decreaseItemQty(state, { payload }) {
       const match = state.items.find(({ cartId }) => cartId === payload);
       if (match && match.qty > 1) {
         match.qty--;
+        updateTotals(state);
       }
     },
     deleteItems(state, { payload }) {

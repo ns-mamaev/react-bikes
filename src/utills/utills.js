@@ -37,3 +37,22 @@ export const parseQuery = (searchString) => {
 export const createTitle = (title, additions, separator = ', ') => {
   return title + separator + Object.values(additions).join(separator);
 };
+
+export const groupDigits = (number, fractionLength = 0, spaceSymbol = ' ', pointSymbol = '.') => {
+  const [integer, fraction] = number.toFixed(fractionLength).toString().split('.');
+  let res = integer
+    .split('')
+    .reverse()
+    .reduce((acc, current, index, arr) => {
+      const shouldAddSpace = (index + 1) % 3 === 0 && index + 1 !== arr.length;
+      if (shouldAddSpace) {
+        return spaceSymbol + current + acc;
+      }
+      return current + acc;
+    }, '');
+
+  if (fraction) {
+    return res + pointSymbol + fraction.slice(0, fractionLength);
+  }
+  return res;
+};

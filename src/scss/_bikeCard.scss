@@ -96,11 +96,13 @@
     text-transform: uppercase;
     transition: all 0.2s ease;
 
-    &::before {
-      content: '';
-      width: 24px;
-      height: 24px;
-      background: url('../assets/images/cart.svg') center / contain no-repeat;
+    &_action_add {
+      &::before {
+        content: '';
+        width: 24px;
+        height: 24px;
+        background: url('../assets/images/cart.svg') center / contain no-repeat;
+      }
     }
 
     &:active {

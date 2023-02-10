@@ -1,8 +1,7 @@
-import { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { deleteItems } from '../../redux/slices/cartSlice';
-import { createTitle } from '../../utills/utills';
+import CartWidgetItem from '../CartWidgetItem';
 import styles from './CartWidget.module.scss';
 
 function CartWidget() {
@@ -10,51 +9,53 @@ function CartWidget() {
   const [popupOpened, setPopupOpened] = useState(false);
   const timerRef = useRef(null);
   const items = useSelector((state) => state.cart.items);
-  const dispatch = useDispatch();
+  const prevQty = useRef(0);
+  const totalQty = useMemo(() => items.reduce((acc, { qty }) => acc + qty, 0), [items]);
+  const flagIncrease = totalQty > prevQty.current ? true : false;
+  console.log(totalQty, prevQty.current, flagIncrease);
 
-  const totalQty = items.reduce((acc, { qty }) => acc + qty, 0);
+  // сохраняем предыдущее кол-во
+  useEffect(() => {
+    prevQty.current = totalQty;
+  }, [totalQty]);
 
-  const onShowPopup = () => {
+  const onMouseEnter = () => {
     if (!totalQty) {
+      // закрываем попап при удалении всего из корзины
+      if (popupOpened) {
+        setPopupOpened(false);
+      }
       return;
+    }
+    if (!popupOpened) {
+      setPopupOpened(true);
     }
     if (timerRef.current !== null) {
       // если повторно навели на попап - отменяем запланированное закрытие
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
-    if (!popupOpened) {
-      setPopupOpened(true);
-    }
   };
 
-  const onHidePopup = () => {
+  const onMouseLeave = () => {
     timerRef.current = setTimeout(() => setPopupOpened(false), 500);
   };
 
-  const onDeleteItem = (id) => {
-    console.log('clk');
-    dispatch(deleteItems(id));
-  };
-
   return (
-    <div className={styles.cartWidget} onMouseEnter={onShowPopup} onMouseLeave={onHidePopup}>
-      <Link title='В корзину' className={styles.cartLink} to='/cart'>
+    <div className={styles.cartWidget} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <Link title="В корзину" className={styles.cartLink} to="/cart">
         Корзина
         <div className={styles.cartIcon}></div>
-        {totalQty ? (
-          <span className={styles.qtyLabel + ' ' + styles.totalQty}>{totalQty}</span>
-        ) : null}
+        {totalQty !== 0 && (
+          <span className={styles.qtyLabel + ' ' + (flagIncrease ? styles.qtyLabelActive : '')}>
+            {totalQty}
+          </span>
+        )}
       </Link>
       <div className={styles.popup + ' ' + (popupOpened ? '' : styles.popupHidden)}>
         <ul className={styles.cartItems}>
-          {items.map(({ options, image, title, cartId, qty }) => (
-            <li key={cartId} className={styles.cartItem}>
-              <p className={styles.itemTitle}>{createTitle(title, options, ' | ')}</p>
-              <img className={styles.itemImage} src={image} alt={title} />
-              {qty > 1 && <span className={styles.qtyLabel + ' ' + styles.itemQty}>x{qty}</span>}
-              <button onClick={() => onDeleteItem(cartId)} className={styles.removeItem}></button>
-            </li>
+          {items.map((item) => (
+            <CartWidgetItem {...item} key={item.cartId} />
           ))}
         </ul>
         <button onClick={() => navigate('/cart')} className={styles.cartBtn}>

@@ -1,6 +1,8 @@
-.cartWidget {
+.root {
   display: block;
   position: relative;
+  justify-self: flex-end;
+  margin-left: auto;
 
   .popup {
     position: absolute;

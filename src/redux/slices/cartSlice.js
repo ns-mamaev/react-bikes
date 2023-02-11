@@ -1,26 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { resolveArray } from '../../utills/utills';
 
 const initialState = {
   items: [],
-  totalQty: 0,
-  totalCost: 0,
   removedBuffer: [],
-  markedRemove: [],
-};
-
-const updateTotals = (state) => {
-  const { totalQty, totalCost } = state.items.reduce(
-    (total, { price, qty }) => {
-      total.totalQty += qty;
-      total.totalCost += qty * price;
-      return total;
-    },
-    { totalQty: 0, totalCost: 0 },
-  );
-
-  state.totalQty = totalQty;
-  state.totalCost = totalCost;
 };
 
 const createCartId = (item) => {
@@ -34,50 +16,49 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, { payload: item }) {
-      state.items.push({ ...item, qty: 1, cartId: createCartId(item) });
-      updateTotals(state);
+      state.items.push({ ...item, qty: 1, cartId: createCartId(item), checked: true });
     },
     increaseItemQty(state, { payload: cartId }) {
       const match = findItemByCartId(state, cartId);
       if (match) {
         match.qty++;
-        updateTotals(state);
       }
     },
     decreaseItemQty(state, { payload: cartId }) {
       const match = findItemByCartId(state, cartId);
       if (match && match.qty > 1) {
         match.qty--;
-        updateTotals(state);
       }
     },
-    replaceMarkedRemove(state, { payload: itemIDs }) {
-      state.markedRemove = itemIDs;
+    toggleChecked(state, { payload: { cartId, isChecked } }) {
+      const element = state.items.find((item) => item.cartId === cartId);
+      if (element) {
+        element.checked = isChecked;
+      }
     },
-    markRemove(state, { payload }) {
-      const cartIDs = resolveArray(payload);
-      cartIDs.forEach((cartId) => {
-        state.markedRemove.push(cartId);
-      });
+    toggleAllChecked(state, { payload: isChecked }) {
+      state.items.forEach((item) => (item.checked = isChecked));
     },
-    unmarkRemove(state, { payload }) {
-      const cartIDs = resolveArray(payload);
-      state.markedRemove = cartIDs.reduce((acc, cartId) => {
-        return acc.filter((item) => item !== cartId);
-      }, state.markedRemove);
+    deleteItem(state, { payload: cartId }) {
+      state.items = state.items.filter((item) => item.cartId !== cartId);
     },
-    deleteItems(state, { payload }) {
-      const itemIDs = resolveArray(payload);
-      state.items = itemIDs.reduce((acc, cartId) => {
-        return acc.filter((item) => item.cartId !== cartId);
-      }, state.items);
-      updateTotals(state);
+    addToRemovedBuffer(state, { payload: cartId }) {
+      state.removedBuffer.push(state.items.find((item) => item.cartId === cartId));
     },
-    addToRemovedBuffer(state, { payload }) {
-      const itemIDs = resolveArray(payload);
-      itemIDs.forEach((id) => {
-        state.removedBuffer.push(state.items.find(({ cartId }) => cartId === id));
-      });
+    deleteCheckedWithBuffer(state) {
+      const { checked, unchecked } = state.items.reduce(
+        (acc, item) => {
+          if (item.checked) {
+            acc.checked.push(item);
+          } else {
+            acc.unchecked.push(item);
+          }
+          return acc;
+        },
+        { checked: [], unchecked: [] },
+      );
+      state.items = unchecked;
+      state.removedBuffer = [...state.removedBuffer, ...checked];
     },
     clearRemovedBuffer(state) {
       state.removedBuffer = [];
@@ -85,7 +66,6 @@ const cartSlice = createSlice({
     restoreRemoved(state) {
       state.items = [...state.removedBuffer, ...state.items];
       state.removedBuffer = [];
-      updateTotals(state);
     },
   },
 });
@@ -97,10 +77,10 @@ export const {
   addToRemovedBuffer,
   clearRemovedBuffer,
   restoreRemoved,
-  markRemove,
-  unmarkRemove,
-  replaceMarkedRemove,
-  deleteItems,
+  toggleChecked,
+  toggleAllChecked,
+  deleteItem,
+  deleteCheckedWithBuffer,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

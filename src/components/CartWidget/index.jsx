@@ -34,7 +34,7 @@ function CartWidget() {
   };
 
   return (
-    <div className={styles.cartWidget} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div className={styles.root} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Link title='В корзину' className={styles.cartLink} to='/cart'>
         Корзина
         <div className={styles.cartIcon}></div>

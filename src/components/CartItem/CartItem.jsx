@@ -2,15 +2,14 @@ import { useDispatch } from 'react-redux';
 import {
   addToRemovedBuffer,
   decreaseItemQty,
-  deleteItems,
+  deleteItem,
   increaseItemQty,
-  markRemove,
-  unmarkRemove,
+  toggleChecked,
 } from '../../redux/slices/cartSlice';
 import { groupDigits } from '../../utills/utills';
 import styles from './CartItem.module.scss';
 
-function CartItem({ item, checked }) {
+function CartItem({ item }) {
   const {
     title,
     image,
@@ -18,16 +17,13 @@ function CartItem({ item, checked }) {
     cartId,
     price,
     options: { color, size },
+    checked,
   } = item;
   const dispatch = useDispatch();
   const cost = groupDigits(price * qty);
 
-  const onToggleCheckbox = () => {
-    if (checked) {
-      dispatch(unmarkRemove(cartId));
-    } else {
-      dispatch(markRemove(cartId));
-    }
+  const onToggleChecked = () => {
+    dispatch(toggleChecked({ cartId, isChecked: !checked }));
   };
 
   const onInrease = () => {
@@ -40,7 +36,7 @@ function CartItem({ item, checked }) {
 
   const onRemove = () => {
     dispatch(addToRemovedBuffer(cartId));
-    dispatch(deleteItems(cartId));
+    dispatch(deleteItem(cartId));
   };
 
   const increaseDisabled = qty < 2;
@@ -53,7 +49,7 @@ function CartItem({ item, checked }) {
         <span className={styles.size}>{size}</span>
       </div>
       <input
-        onChange={onToggleCheckbox}
+        onChange={onToggleChecked}
         checked={checked}
         className={styles.checkbox}
         type='checkbox'

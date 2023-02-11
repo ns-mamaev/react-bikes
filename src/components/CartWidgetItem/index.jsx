@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { deleteItems } from '../../redux/slices/cartSlice';
+import { deleteItem } from '../../redux/slices/cartSlice';
 import { createTitle } from '../../utills/utills';
 import styles from './CartWidgetItem.module.scss';
 
@@ -8,7 +8,7 @@ function CartWidgetItem({ title, options, image, qty, cartId }) {
 
   const onDeleteItem = (id) => {
     console.log('clk');
-    dispatch(deleteItems(id));
+    dispatch(deleteItem(id));
   };
 
   return (

@@ -1,11 +1,49 @@
 import { useDispatch } from 'react-redux';
-import { decreaseItemQty, increaseItemQty } from '../../redux/slices/cartSlice';
+import {
+  addToRemovedBuffer,
+  decreaseItemQty,
+  deleteItems,
+  increaseItemQty,
+  markRemove,
+  unmarkRemove,
+} from '../../redux/slices/cartSlice';
 import { groupDigits } from '../../utills/utills';
 import styles from './CartItem.module.scss';
 
-function CartItem({ title, image, qty, cartId, price, options: { color, size }, checkedAll }) {
+function CartItem({ item, checked }) {
+  const {
+    title,
+    image,
+    qty,
+    cartId,
+    price,
+    options: { color, size },
+  } = item;
   const dispatch = useDispatch();
   const cost = groupDigits(price * qty);
+
+  const onToggleCheckbox = () => {
+    if (checked) {
+      dispatch(unmarkRemove(cartId));
+    } else {
+      dispatch(markRemove(cartId));
+    }
+  };
+
+  const onInrease = () => {
+    dispatch(increaseItemQty(cartId));
+  };
+
+  const onDecrease = () => {
+    dispatch(decreaseItemQty(cartId));
+  };
+
+  const onRemove = () => {
+    dispatch(deleteItems(cartId));
+    dispatch(addToRemovedBuffer(item));
+  };
+
+  const increaseDisabled = qty < 2;
 
   return (
     <li className={styles.cartItem}>
@@ -14,17 +52,22 @@ function CartItem({ title, image, qty, cartId, price, options: { color, size }, 
         <span className={styles.color} style={{ background: color }}></span>
         <span className={styles.size}>{size}</span>
       </div>
-      <input className={styles.checkbox} type='checkbox' />
+      <input
+        onChange={onToggleCheckbox}
+        checked={checked}
+        className={styles.checkbox}
+        type='checkbox'
+      />
       <img className={styles.itemImage} src={image} alt={title} />
       <div className={styles.actions}>
-        <button className={styles.qtyButton} onClick={() => dispatch(increaseItemQty(cartId))}>
-          +
-        </button>
-        <span className={styles.qty}>{qty}</span>
-        <button className={styles.qtyButton} onClick={() => dispatch(decreaseItemQty(cartId))}>
+        <button disabled={increaseDisabled} className={styles.qtyButton} onClick={onDecrease}>
           -
         </button>
-        <button className={styles.textButton} type='button'>
+        <span className={styles.qty}>{qty}</span>
+        <button className={styles.qtyButton} onClick={onInrease}>
+          +
+        </button>
+        <button onClick={onRemove} className={styles.textButton} type='button'>
           Удалить
         </button>
       </div>

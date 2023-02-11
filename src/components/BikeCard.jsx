@@ -17,7 +17,6 @@ function BikeCard({ id, modelName, images, colors, sizes, price, addedToCart }) 
       return false;
     }
     const match = addedToCart.findIndex(({ options }) => {
-      console.log(options);
       return options.color === color && options.size === size;
     });
     return match > -1;
@@ -29,10 +28,10 @@ function BikeCard({ id, modelName, images, colors, sizes, price, addedToCart }) 
   };
 
   return (
-    <li className="bike-card">
-      <h4 className="bike-card__name">{modelName}</h4>
-      <img src={image} alt={modelName} className="bike-card__image" />
-      <ul className="bike-card__colors">
+    <li className='bike-card'>
+      <h4 className='bike-card__name'>{modelName}</h4>
+      <img src={image} alt={modelName} className='bike-card__image' />
+      <ul className='bike-card__colors'>
         {colors.map((color, i) => (
           <li
             className={`bike-card__color-circle ${
@@ -44,7 +43,7 @@ function BikeCard({ id, modelName, images, colors, sizes, price, addedToCart }) 
           />
         ))}
       </ul>
-      <ul className="bike-card__sizes">
+      <ul className='bike-card__sizes'>
         {sizes.map((size, i) => (
           <li
             className={`bike-card__size-tab ${
@@ -56,10 +55,10 @@ function BikeCard({ id, modelName, images, colors, sizes, price, addedToCart }) 
           </li>
         ))}
       </ul>
-      <div className="bike-card__bottom">
-        <p className="bike-card__price">от {price} $</p>
+      <div className='bike-card__bottom'>
+        <p className='bike-card__price'>от {price} $</p>
         <button
-          type="button"
+          type='button'
           className={`bike-card__cart-button ${
             isAddedToCart ? '' : 'bike-card__cart-button_action_add'
           }`}

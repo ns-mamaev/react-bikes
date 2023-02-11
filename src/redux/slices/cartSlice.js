@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import hash from 'object-hash';
+import { resolveArray } from '../../utills/utills';
 
 const initialState = {
   items: [],
   totalQty: 0,
   totalCost: 0,
+  removedBuffer: [],
+  markedRemove: [],
 };
 
 const updateTotals = (state) => {
@@ -21,38 +23,84 @@ const updateTotals = (state) => {
   state.totalCost = totalCost;
 };
 
+const createCartId = (item) => {
+  return item.id + Object.values(item.options).join('');
+};
+
+const findItemByCartId = (state, cartId) => state.items.find((item) => cartId === item.cartId);
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItem(state, { payload }) {
-      state.items.push({ ...payload, qty: 1, cartId: hash(payload) });
+    addItem(state, { payload: item }) {
+      state.items.push({ ...item, qty: 1, cartId: createCartId(item) });
       updateTotals(state);
     },
-    increaseItemQty(state, { payload }) {
-      const match = state.items.find(({ cartId }) => cartId === payload);
+    increaseItemQty(state, { payload: cartId }) {
+      const match = findItemByCartId(state, cartId);
       if (match) {
         match.qty++;
         updateTotals(state);
       }
     },
-    decreaseItemQty(state, { payload }) {
-      const match = state.items.find(({ cartId }) => cartId === payload);
+    decreaseItemQty(state, { payload: cartId }) {
+      const match = findItemByCartId(state, cartId);
       if (match && match.qty > 1) {
         match.qty--;
         updateTotals(state);
       }
     },
+    replaceMarkedRemove(state, { payload: itemIDs }) {
+      state.markedRemove = itemIDs;
+    },
+    markRemove(state, { payload }) {
+      const cartIDs = resolveArray(payload);
+      cartIDs.forEach((cartId) => {
+        state.markedRemove.push(cartId);
+      });
+    },
+    unmarkRemove(state, { payload }) {
+      const cartIDs = resolveArray(payload);
+      state.markedRemove = cartIDs.reduce((acc, cartId) => {
+        return acc.filter((item) => item !== cartId);
+      }, state.markedRemove);
+    },
+    addToRemovedBuffer(state, { payload }) {
+      const items = resolveArray(payload);
+      items.forEach((item) => {
+        state.removedBuffer.push(item);
+      });
+      updateTotals(state);
+    },
+    clearRemovedBuffer(state) {
+      state.removedBuffer = [];
+    },
+    restoreRemoved(state) {
+      state.items = [...state.removedBuffer, ...state.items];
+      state.removedBuffer = [];
+      updateTotals(state);
+    },
     deleteItems(state, { payload }) {
-      console.log('dispatch');
-      const items = Array.isArray(payload) ? payload : [payload];
-      state.items = items.reduce((acc, cartId) => {
+      const itemIDs = resolveArray(payload);
+      state.items = itemIDs.reduce((acc, cartId) => {
         return acc.filter((item) => item.cartId !== cartId);
       }, state.items);
     },
   },
 });
 
-export const { addItem, increaseItemQty, decreaseItemQty, deleteItems } = cartSlice.actions;
+export const {
+  addItem,
+  increaseItemQty,
+  decreaseItemQty,
+  deleteItems,
+  addToRemovedBuffer,
+  clearRemovedBuffer,
+  restoreRemoved,
+  markRemove,
+  unmarkRemove,
+  replaceMarkedRemove,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

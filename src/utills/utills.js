@@ -56,3 +56,5 @@ export const groupDigits = (number, fractionLength = 0, spaceSymbol = ' ', point
   }
   return res;
 };
+
+export const resolveArray = (arg) => (Array.isArray(arg) ? arg : [arg]);

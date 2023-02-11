@@ -10,6 +10,7 @@
 
   &:hover {
     transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   }
 
   &__name {
@@ -22,6 +23,7 @@
 
   &__image {
     width: 100%;
+    aspect-ratio: 1.6;
     object-fit: contain;
     object-position: center;
     order: -1;
@@ -35,18 +37,85 @@
     padding: 0;
     list-style: none;
     column-gap: 10px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
+    align-items: center;
   }
 
   &__color-circle {
     width: 24px;
     height: 24px;
     border-radius: 50%;
+    cursor: pointer;
+
+    &_active {
+      outline: 2px solid #000;
+      border: 2px solid #fff;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   &__size-tab {
     padding: 5px 20px;
     background-color: #ccc;
     cursor: pointer;
+
+    &_active {
+      background-color: #000;
+      color: #fff;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__bottom {
+    margin: 16px 0;
+    display: flex;
+    column-gap: 32px;
+    align-items: center;
+  }
+
+  &__price {
+    margin: 0;
+    font-weight: 500;
+    font-size: 28px;
+  }
+
+  &__cart-button {
+    cursor: pointer;
+    background-color: transparent;
+    padding: 8px 16px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+
+    &_action_add {
+      &::before {
+        content: '';
+        width: 24px;
+        height: 24px;
+        background: url('../assets/images/cart.svg') center / contain no-repeat;
+      }
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+
+    &:hover {
+      background-color: #000;
+      color: #fff;
+
+      &::before {
+        filter: invert(1);
+      }
+    }
   }
 }

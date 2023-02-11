@@ -1,0 +1,117 @@
+.cartItem {
+  background: #fff;
+  padding: 16px 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  column-gap: 24px; // минимальный отступ
+
+  .description {
+    flex-grow: 1;
+    flex-basis: 200px;
+
+    .title {
+      margin: 0;
+      font-size: 20px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .color {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      outline: 2px solid #000;
+      border: 2px solid #fff;
+      margin-right: 12px;
+      vertical-align: middle;
+    }
+
+    .size {
+      display: inline-block;
+      padding: 3px 16px;
+      vertical-align: middle;
+      font-size: 14px;
+      color: #fff;
+      background-color: #000;
+    }
+  }
+
+  .checkbox {
+    order: -10;
+    align-self: center;
+    width: 24px;
+    height: 24px;
+  }
+
+  .itemImage {
+    width: 200px;
+    height: 120px;
+    object-fit: contain;
+    object-position: center;
+    order: -1;
+    margin-right: 10px;
+  }
+
+  .actions {
+    padding-top: 5px;
+    flex-basis: 150px;
+
+    .qty {
+      display: inline-block;
+      min-width: 30px;
+      font-weight: 600;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .qtyButton {
+      display: inline-block;
+      background: none;
+      margin: 0;
+      font-size: 18px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.7;
+        &:hover {
+          color: #000;
+          background: none;
+          opacity: 0.7;
+        }
+      }
+
+      &:hover {
+        color: #fff;
+        background: #000;
+      }
+    }
+
+    .textButton {
+      display: block;
+      cursor: pointer;
+      font-weight: 700;
+      border: none;
+      margin: 0;
+      padding: 0;
+      background: none;
+      margin-top: 20px;
+      color: #777;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  .cost {
+    font-size: 24px;
+    font-weight: 600;
+    flex-basis: 120px;
+    text-align: right;
+  }
+}

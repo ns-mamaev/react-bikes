@@ -1,0 +1,100 @@
+.root {
+  display: block;
+  position: relative;
+  justify-self: flex-end;
+  margin-left: auto;
+
+  .popup {
+    position: absolute;
+    z-index: 150;
+    background-color: #fff;
+    padding: 32px 20px 16px;
+    box-sizing: border-box;
+    display: flex;
+    margin: 0;
+    margin-top: 16px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 40%);
+    right: 0;
+    flex-direction: column;
+    width: 400px;
+
+    &Hidden {
+      display: none;
+    }
+
+    .cartItems {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cartBtn {
+      cursor: pointer;
+      background-color: transparent;
+      padding: 8px 16px;
+      font-size: 16px;
+      column-gap: 8px;
+      text-transform: uppercase;
+      transition: scale 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+      text-align: center;
+
+      &:active {
+        transform: scale(0.97);
+      }
+
+      &:hover {
+        background-color: #000;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.cartLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  position: relative;
+  color: unset;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.cartIcon {
+  width: 32px;
+  height: 32px;
+  order: -1;
+  background: url('../../assets/images/cart-empty.svg') center / contain no-repeat;
+}
+
+.qtyLabel {
+  background-color: #000;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  font-weight: 700;
+  font-size: 16px;
+  position: absolute;
+  z-index: 2;
+  top: -16px;
+  right: 0;
+
+  &Active {
+    @keyframes zoom {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.8);
+      }
+    }
+    animation: 0.2s ease alternate zoom;
+  }
+}

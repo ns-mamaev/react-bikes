@@ -1,6 +1,19 @@
 [
   {
     "id": 0,
+    "modelName": "scultura rim 4000",
+    "images": [
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/SCULTURA_RIM_4000_blublk_MY2022.tif?p3",
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2021/SCULTURA_RIM_4000_blkblk_MY2021.tif?p3"
+    ],
+    "colors": ["#1D8ED0", "#000"],
+    "sizes": ["S", "M", "L", "XL"],
+    "price": 2200,
+    "category": 1,
+    "rating": 8
+  },
+  {
+    "id": 1,
     "modelName": "reacto team",
     "images": [
       "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/REACTO_TEAM_BAHRAIN_R_MY2022.tif?p3",
@@ -8,24 +21,24 @@
     ],
     "colors": ["#F96C00", "#000"],
     "sizes": ["XS", "S", "M", "L", "XL"],
-    "price": 2500,
-    "category": 0,
+    "price": 4500,
+    "category": 2,
     "rating": 8
   },
   {
-    "id": 1,
+    "id": 2,
     "modelName": "reacto 8000",
     "images": [
       "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/REACTO_8000_redgry_MY2022.tif?p3"
     ],
     "colors": ["#FF2200"],
     "sizes": ["S", "M", "L", "XL"],
-    "price": 2000,
-    "category": 0,
+    "price": 4000,
+    "category": 2,
     "rating": 7
   },
   {
-    "id": 2,
+    "id": 3,
     "modelName": "reacto 6000",
     "images": [
       "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022_Mockups_Assemblings/REACTO_6000_blublu_MOC22_1.tif?p3",
@@ -33,8 +46,86 @@
     ],
     "colors": ["#1D8ED0", "#000"],
     "sizes": ["S", "M", "L"],
-    "price": 1800,
-    "category": 0,
+    "price": 3500,
+    "category": 2,
     "rating": 9
+  },
+  {
+    "id": 4,
+    "modelName": "scultura 200",
+    "images": [
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022_Mockups_Assemblings/SCULTURA_200_grnslv_MOC22_1.tif?p3",
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022_Mockups_Assemblings/SCULTURA_200_blkslv_MOC22_1.tif?p3"
+    ],
+    "colors": ["#bada55", "#000"],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "price": 1600,
+    "category": 1,
+    "rating": 5
+  },
+  {
+    "id": 5,
+    "modelName": "scultura rim 400",
+    "images": [
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2021/SCULTURA_RIM_400_redslv_MY2021.tif?p3",
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2021/SCULTURA_RIM_400_blkslv_MY2021.tif?p3"
+    ],
+    "colors": ["#f00", "#000"],
+    "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+    "price": 2000,
+    "category": 1,
+    "rating": 7
+  },
+  {
+    "id": 6,
+    "modelName": "scultura 5000",
+    "images": [
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/SCULTURA_5000_grnblk_MY2022.tif?p3",
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/SCULTURA_5000_TEAM_BAHRAIN_R_MY2022.tif?p3",
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/SCULTURA_5000_blkslv_MY2022.tif?p3"
+    ],
+    "colors": ["#bada55", "#f00", "#000"],
+    "sizes": ["S", "M", "L", "XL"],
+    "price": 3000,
+    "category": 1,
+    "rating": 9
+  },
+  {
+    "id": 7,
+    "modelName": "scultura limited",
+    "images": [
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/SCULTURA_5000_blkslv_MY2022.tif?p3",
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/SCULTURA_LIMITED_cmpblk_MY2022.tif?p3"
+    ],
+    "colors": ["#000", "#ffeea8"],
+    "sizes": ["M", "L", "XL"],
+    "price": 5000,
+    "category": 1,
+    "rating": 8
+  },
+  {
+    "id": 8,
+    "modelName": "one-sixty 8000",
+    "images": [
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/ONE-SIXTY_8000_blkslv_MY2022.tif?p3",
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/ONE-SIXTY_8000_blugry_MY2022.tif?p3"
+    ],
+    "colors": ["#000", "#00f"],
+    "sizes": ["M", "L", "XL"],
+    "price": 6000,
+    "category": 4,
+    "rating": 9
+  },
+  {
+    "id": 9,
+    "modelName": "one-sixty 8000",
+    "images": [
+      "https://d2lljesbicak00.cloudfront.net/merida-v2/crud-card//master/bikes/2022/BIG_NINE_700_grncmp_MY2022.tif?p3"
+    ],
+    "colors": ["#396"],
+    "sizes": ["XS", "M", "L", "XL"],
+    "price": 5600,
+    "category": 3,
+    "rating": 8
   }
 ]

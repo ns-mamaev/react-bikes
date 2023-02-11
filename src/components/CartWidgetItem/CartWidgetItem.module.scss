@@ -1,0 +1,57 @@
+.cartItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+
+  &:hover .removeItem {
+    visibility: visible;
+  }
+
+  .itemImage {
+    order: -1;
+    width: 96px;
+    height: 48px;
+    object-fit: contain;
+    object-position: center;
+    margin-right: 16px;
+  }
+
+  .itemTitle {
+    margin: 0;
+    margin-right: 10px;
+    flex-grow: 1;
+  }
+
+  .qtyLabel {
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    font-weight: 700;
+    font-size: 16px;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    font-size: 12px;
+  }
+
+  .removeItem {
+    visibility: hidden;
+    width: 28px;
+    height: 28px;
+    background: url(../../assets/images/trash.svg) center / contain no-repeat;
+    border: none;
+    padding: 0;
+
+    &:hover {
+      opacity: 0.7;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.root {
+  padding: 20px 20px;
+  display: flex;
+  align-items: center;
+  // justify-content: space-between;
+}
+
+.title {
+  margin: 0;
+  margin-right: 20px;
+}
+
+.backLink {
+  width: 32px;
+  height: 32px;
+  display: block;
+  background: url(../../assets/images/arrow-left.svg) center / cover no-repeat;
+  margin-right: 12px;
+  border-radius: 50%;
+
+  &:hover {
+    filter: invert(1);
+    background-color: #fff;
+  }
+}

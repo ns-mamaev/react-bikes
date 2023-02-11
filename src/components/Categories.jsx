@@ -1,17 +1,22 @@
-import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { categoriesList } from '../utills/constants';
+import { setCategory } from '../redux/slices/filterSlice';
 
 function Categories() {
-  const categoriesList = ['шоссе', 'шоссе аэро', 'хардтейлы', 'двухподвесы'];
+  const selected = useSelector((state) => state.filter.categoryId);
+  const dispatch = useDispatch();
 
-  const [activeCategory, setActiveCategory] = React.useState(0);
+  const onSelectCategory = (i) => {
+    dispatch(setCategory(i));
+  };
 
   return (
     <ul className="categories">
       {categoriesList.map((cat, i) => (
         <li
-          className={`categories__item ${activeCategory === i ? 'categories__item_active' : ''}`}
-          onClick={() => setActiveCategory(i)}
-          key={i}>
+          className={`categories__item ${selected === i ? 'categories__item_active' : ''}`}
+          onClick={() => onSelectCategory(i)}
+          key={cat}>
           {cat}
         </li>
       ))}

@@ -1,0 +1,72 @@
+@import '/src/scss/variables.scss';
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.4;
+  }
+}
+
+.root {
+  background-color: #fff;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bike {
+  animation: pulse 0.5s infinite alternate;
+  margin-bottom: 20px;
+  fill: $skeleton-color;
+  width: 100%;
+  aspect-ratio: 1.6;
+}
+
+.title {
+  animation: pulse 0.5s infinite alternate;
+  height: 27px;
+  width: 150px;
+  margin-bottom: 12px;
+  background-color: $skeleton-color;
+}
+
+.colors {
+  animation: pulse 0.5s infinite alternate;
+  height: 28px;
+  width: 70px;
+  margin-bottom: 12px;
+  background-color: $skeleton-color;
+  border-radius: 14px;
+}
+
+.sizes {
+  animation: pulse 0.5s infinite alternate;
+  background-color: $skeleton-color;
+  height: 31px;
+  width: 220px;
+  margin-bottom: 12px;
+}
+
+.bottom {
+  margin: 16px 0;
+  display: flex;
+  column-gap: 32px;
+  align-items: center;
+}
+
+.price {
+  animation: pulse 0.5s infinite alternate;
+  background-color: $skeleton-color;
+  width: 120px;
+  height: 37px;
+}
+
+.button {
+  animation: pulse 0.5s infinite alternate;
+  background-color: $skeleton-color;
+  width: 155px;
+  height: 44px;
+}

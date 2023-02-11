@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartItem from '../../components/CartItem';
 import {
+  addToRemovedBuffer,
   clearRemovedBuffer,
+  deleteItems,
   replaceMarkedRemove,
   restoreRemoved,
 } from '../../redux/slices/cartSlice';
@@ -41,7 +43,11 @@ function CartPage() {
     }
   };
 
-  const onRemove = () => {};
+  const onRemove = () => {
+    dispatch(addToRemovedBuffer(markedRemove));
+    dispatch(deleteItems(markedRemove));
+    dispatch(replaceMarkedRemove([]));
+  };
 
   const resolveItemChecked = (cartId) => markedRemove.includes(cartId);
 
@@ -74,21 +80,23 @@ function CartPage() {
               <button onClick={onClearBuffer}>Х</button>
             </div>
           )}
-          <div className={styles.selectWidget}>
-            <label>
-              <input
-                name='checkbox-all'
-                type='checkbox'
-                onChange={toggleChechbox}
-                checked={checkboxActive}
-                className={styles.checkbox}
-              />
-              Выбрать все
-            </label>
-            <button onClick={onRemove} type='button'>
-              Удалить выбранные
-            </button>
-          </div>
+          {items.length > 0 && (
+            <div className={styles.selectWidget}>
+              <label>
+                <input
+                  name='checkbox-all'
+                  type='checkbox'
+                  onChange={toggleChechbox}
+                  checked={checkboxActive}
+                  className={styles.checkbox}
+                />
+                Выбрать все
+              </label>
+              <button onClick={onRemove} type='button'>
+                Удалить выбранные
+              </button>
+            </div>
+          )}
           <ul className={styles.list}>
             {items.map((item) => (
               <CartItem item={item} key={item.cartId} checked={resolveItemChecked(item.cartId)} />

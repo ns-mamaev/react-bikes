@@ -66,12 +66,18 @@ const cartSlice = createSlice({
         return acc.filter((item) => item !== cartId);
       }, state.markedRemove);
     },
-    addToRemovedBuffer(state, { payload }) {
-      const items = resolveArray(payload);
-      items.forEach((item) => {
-        state.removedBuffer.push(item);
-      });
+    deleteItems(state, { payload }) {
+      const itemIDs = resolveArray(payload);
+      state.items = itemIDs.reduce((acc, cartId) => {
+        return acc.filter((item) => item.cartId !== cartId);
+      }, state.items);
       updateTotals(state);
+    },
+    addToRemovedBuffer(state, { payload }) {
+      const itemIDs = resolveArray(payload);
+      itemIDs.forEach((id) => {
+        state.removedBuffer.push(state.items.find(({ cartId }) => cartId === id));
+      });
     },
     clearRemovedBuffer(state) {
       state.removedBuffer = [];
@@ -81,12 +87,6 @@ const cartSlice = createSlice({
       state.removedBuffer = [];
       updateTotals(state);
     },
-    deleteItems(state, { payload }) {
-      const itemIDs = resolveArray(payload);
-      state.items = itemIDs.reduce((acc, cartId) => {
-        return acc.filter((item) => item.cartId !== cartId);
-      }, state.items);
-    },
   },
 });
 
@@ -94,13 +94,13 @@ export const {
   addItem,
   increaseItemQty,
   decreaseItemQty,
-  deleteItems,
   addToRemovedBuffer,
   clearRemovedBuffer,
   restoreRemoved,
   markRemove,
   unmarkRemove,
   replaceMarkedRemove,
+  deleteItems,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -39,8 +39,8 @@ function CartItem({ item, checked }) {
   };
 
   const onRemove = () => {
+    dispatch(addToRemovedBuffer(cartId));
     dispatch(deleteItems(cartId));
-    dispatch(addToRemovedBuffer(item));
   };
 
   const increaseDisabled = qty < 2;

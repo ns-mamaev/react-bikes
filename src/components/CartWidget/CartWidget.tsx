@@ -9,7 +9,10 @@ function CartWidget() {
   const [popupOpened, setPopupOpened] = useState(false);
   const timerRef = useRef(null);
   const items = useSelector((state) => state.cart.items);
-  const totalQty = useMemo(() => items.reduce((acc, { qty }) => acc + qty, 0), [items]);
+  const totalQty = useMemo(
+    () => items.reduce((acc: number, { qty }: any) => acc + qty, 0),
+    [items],
+  );
 
   const onMouseEnter = () => {
     if (!totalQty) {

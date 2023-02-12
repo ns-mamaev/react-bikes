@@ -23,13 +23,13 @@ const ProductPage: React.FC = ({ className }: PageProps) => {
     return <p>'При обновлении велосипеды пока не показываются';</p>;
   }
 
-  // const { modelName, images, price } = product;
+  const { modelName, images, price } = product;
 
   return (
     <div className={cn(cls.ProductPage, {}, [className])}>
-      <img src={product.images[0]} alt={product.modelName} />
-      <h2>{product.modelName}</h2>
-      <p>{product.price}</p>
+      <img src={images[0]} alt={modelName} />
+      <h2>{modelName}</h2>
+      <p>{price}</p>
     </div>
   );
 };

@@ -11,20 +11,20 @@ function Sort() {
   const dispatch = useDispatch();
   const popupRef = useRef();
 
-  const onSelectType = (i) => {
+  const onSelectType = (i: number) => {
     dispatch(setSortType(i));
     setPopupOpened(false);
   };
 
   useEffect(() => {
-    const onEscClose = (e) => {
+    const onEscClose = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setPopupOpened(false);
       }
     };
 
-    const onClickAround = (e) => {
-      if (e.target.closest(`.${styles.sort}`) !== popupRef.current) {
+    const onClickAround = (e: MouseEvent) => {
+      if (e.target && e.target.closest(`.${styles.sort}`) !== popupRef.current) {
         setPopupOpened(!popupOpened);
       }
     };

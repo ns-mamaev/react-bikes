@@ -1,10 +1,10 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import MainPage from './pages/MainPage';
 import CartPage from './pages/CartPage';
 import NotFoundPage from './pages/NotFoundPage';
 import './scss/app.scss';
+import ProductPage from './pages/ProductPage/ProductPage';
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<MainPage />} />
+        <Route path='/product/:productId' element={<ProductPage />} />
         <Route path='/cart' element={<CartPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>

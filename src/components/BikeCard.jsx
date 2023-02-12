@@ -27,10 +27,14 @@ function BikeCard({ id, modelName, images, colors, sizes, price, addedToCart }) 
     dispatch(addItem(item));
   };
 
+  const onOpenProductPage = () => {
+    navigate(`/product/${id}`);
+  };
+
   return (
     <li className='bike-card'>
       <h4 className='bike-card__name'>{modelName}</h4>
-      <img src={image} alt={modelName} className='bike-card__image' />
+      <img src={image} alt={modelName} className='bike-card__image' onClick={onOpenProductPage} />
       <ul className='bike-card__colors'>
         {colors.map((color, i) => (
           <li

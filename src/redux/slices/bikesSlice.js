@@ -14,6 +14,6 @@ const bikesSlice = createSlice({
   },
 });
 
-export const { setBikes, setLoading } = bikesSlice.actions;
+export const { setBikes } = bikesSlice.actions;
 
 export default bikesSlice.reducer;
